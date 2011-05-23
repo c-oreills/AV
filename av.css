@@ -1,0 +1,27 @@
+.ballot {
+  width: 80px;
+  margin: 0 5px;
+  background-color: #222;
+  display: block;
+  /*
+  border: 1px solid black;
+  */
+}
+
+.ballot-col {
+  display: inline-block;
+}
+
+.stack {
+  display: inline-block;
+  bottom: 0;
+}
+
+.graph {
+  margin: 10px 0;
+  border: 1px solid black;
+}
+
+div {
+  line-height: 0;
+}
