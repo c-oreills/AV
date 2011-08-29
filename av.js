@@ -177,37 +177,63 @@ function draw_election(party_ballots) {
 function render_round(party_ballots, party_vote_nums, party_vote_stats) {
   var output_div = $("div#out");
   var graph = $("<div class='graph'/>");
-  var graph_height = party_vote_nums[party_vote_stats.max_party]/SCALE;
+  var max_col_height = party_vote_nums[party_vote_stats.max_party]/SCALE; 
+  var graph_height = max_col_height + 20
   graph.css("height", graph_height);
-  for (var i in party_ballots) {
-    var party = party_ballots[i];
-    var party_stack = $("<div class='stack' />");
-    party_stack.css("height", graph_height);
+  for (var party_name in party_ballots) {
+    var party = party_ballots[party_name];
 
-    for (var i = party.length-1; i >= 0; i--) {
-      var ballot = party[i];
-      party_stack.append(render_ballot(ballot));
-    }
-    graph.append(party_stack);
+    var party_stack = render_party_stack(party, party_name);
+    var party_label = render_party_label(party_name);
+
+    var party_container = $("<div class='party-container' />");
+    party_container.css("height", graph_height);
+    party_container.append(party_stack);
+    party_container.append(party_label);
+    graph.append(party_container);
   }
   output_div.append(graph);
   output_div.append("<br/>");
 }
 
-function render_ballots(ballots) {
-  for (var i in ballots) {
-    ballots[i] = render_ballot(ballots[i]);
+function render_party_stack(party, party_name) {
+  var party_stack = $("<div class='stack' />");
+
+  for (var i = party.length-1; i >= 0; i--) {
+    var ballot = party[i];
+    party_stack.append(render_ballot(ballot, party_name));
   }
-  return ballots;
+
+  return party_stack
 }
 
-function render_ballot(ballot){
+function render_party_label(party_name) {
+  var party_label_name = $("<div class='party-label-name' />");
+  party_label_name.html(party_name);
+
+  var party_colour = $("<div class='party-colour' />");
+  party_colour.css("background-color", party_colours[party_name]);
+
+  var party_label = $("<div class='party-label' />");
+  party_label.append(party_label_name);
+  party_label.append(party_colour);
+
+  return party_label;
+}
+
+function render_ballot(ballot, party_name){
   var ballot_stack = $("<div class='ballot'></div>");
   ballot_stack.css("height", ballot.n/SCALE);
   var col_width = 99/ballot.prefs.length + "%";
+  // Discarded preferences only shown with half opacity
+  var pref_opacity = 0.5;
   for each (var pref in ballot.prefs) {
+    if (pref === party_name){
+      pref_opacity = 1;
+    }
     var ballot_col = $("<div class='ballot-col'></div>");
     ballot_col.css("background-color", party_colours[pref]);
+    ballot_col.css("opacity", pref_opacity);
     ballot_col.css("width", col_width);
     ballot_col.css("height", ballot.n/SCALE - 1);
     ballot_stack.append(ballot_col);
