@@ -7,6 +7,21 @@
     <link href="av.css" rel="stylesheet" type="text/css"></link>
   </head>
   <body>
+      <div id="in">
+        <form onSubmit="return parse_ballots_in();">
+          <textarea id="ballots-in" rows="10">
+ABDC:500
+ADBC:500
+BAC:700
+BCA:700
+C:1200
+DB:300
+DC:300
+E:120
+FC:80</textarea>
+          <input type="submit" value="Run AV" />
+        </form>
+      </div>
     <div id="out"></div>
   </body>
 </html>

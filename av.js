@@ -9,7 +9,7 @@ party_colours = {
   F: 'orange',
 }
 
-ballots = [
+ballots_old = [
   {
     n: 500,
     prefs: 'ABDC'
@@ -48,12 +48,33 @@ ballots = [
   },
 ]
 
-function start() {
-  // Construct an initial list of parties with empty ballot lists
-  var party_ballots = {};
-  for (var i in party_colours) {
-    party_ballots[i] = [];
+function parse_ballots_in() {
+  var ballots = [];
+  var ballots_in_text = $('#ballots-in').val();
+  var ballot_pairs = ballots_in_text.replace(/ /g, '').split('\n');
+  for (var i = 0, len = ballot_pairs.length; i < len; i++) {
+    var ballot_pair = ballot_pairs[i];
+    if (ballot_pair !== "") {
+      var ballot = {};
+      ballot_pair = ballot_pair.split(':');
+      ballot['prefs'] = ballot_pair[0];
+      ballot['n'] = parseInt(ballot_pair[1], 10);
+      ballots.push(ballot);
+    }
   }
+
+  // Clear output
+  $('#out').html('');
+
+  start(ballots);
+
+  return false;
+}
+
+$(document).ready(parse_ballots_in);
+
+function start(ballots, candidates) {
+  party_ballots = make_initial_party_ballots(ballots);
 
   // Assign initial votes
   party_ballots = assign_ballots(party_ballots, ballots);
@@ -63,7 +84,20 @@ function start() {
   round(party_ballots);
 }
 
-$(document).ready(start);
+function make_initial_party_ballots(ballots) {
+  // Construct an initial list of parties with empty ballot lists
+  var party_ballots = {};
+  for (var i = 0, len = ballots.length; i < len; i++) {
+    var ballot = ballots[i];
+    for (var j = 0, jlen = ballot['prefs'].length; j < jlen; j++) {
+      var candidate = ballot['prefs'][j];
+      if (Object.keys(party_ballots).indexOf(candidate) === -1) {
+        party_ballots[candidate] = [];
+      }
+    }
+  }
+  return party_ballots;
+}
 
 function assign_ballots(party_ballots, ballots) {
   for each (var ballot in ballots) {
