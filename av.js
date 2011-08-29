@@ -194,6 +194,7 @@ function round(party_ballots) {
 function redistribute(party_ballots, losing_party) {
   var ballots = party_ballots[losing_party];
   delete party_ballots[losing_party];
+  announce("Party " + losing_party + " eliminated!");
   return assign_ballots(party_ballots, ballots)
 }
 
@@ -235,7 +236,7 @@ function render_round(party_ballots, party_vote_nums, party_vote_stats) {
 
 function announce(message) {
   var output_div = $("div#out");
-  output_div.append("<p>" + message + "</p>");
+  output_div.append("<p class='announce'>" + message + "</p>");
   output_div.append("<br/>");
 }
 
