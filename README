@@ -1,1 +1,11 @@
-A simple Javascript simulator for the Alternative Vote system
+A toy to explore with the Alternative Vote system proposed in the 2011 referendum.
+
+Also experimenting with using Javascript in a more functional style (side effects are used to render results to the DOM).
+
+Enter ballots into the text area in the following form:
+
+pref:n
+
+Where pref is a list of candidates in preferred order (candidates must be uppercase A-I) and n is the number of voters with this preference.
+
+Once a candidate has been eliminated, their colour is shown faded in the subsequent vote counts. 
