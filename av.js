@@ -7,6 +7,9 @@ party_colours = {
   D: 'green',
   E: 'purple',
   F: 'orange',
+  G: 'magenta',
+  H: 'cyan',
+  I: 'lawngreen',
 }
 
 ballots_old = [
