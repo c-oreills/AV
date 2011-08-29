@@ -89,11 +89,11 @@ function make_initial_party_ballots(ballots) {
   var party_ballots = {};
   for (var i = 0, len = ballots.length; i < len; i++) {
     var ballot = ballots[i];
-    for (var j = 0, jlen = ballot['prefs'].length; j < jlen; j++) {
-      var candidate = ballot['prefs'][j];
-      if (Object.keys(party_ballots).indexOf(candidate) === -1) {
-        party_ballots[candidate] = [];
-      }
+    // Only check the first candidate of each ballot
+    // If a candidate does not appear as a first choice they are instantly eliminated
+    var candidate = ballot['prefs'][0];
+    if (Object.keys(party_ballots).indexOf(candidate) === -1) {
+      party_ballots[candidate] = [];
     }
   }
   return party_ballots;
