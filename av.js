@@ -195,12 +195,12 @@ function redistribute(party_ballots, losing_party) {
 }
 
 function win_election(party) {
-  console.log("Party " + party + " has won!");
+  announce("Party " + party + " has won!");
 }
 
 function draw_election(party_ballots) {
   for (var party in party_ballots) {
-    console.log("Party " + party + " has drawn!");
+    announce("Party " + party + " has drawn!");
   }
 }
 
@@ -227,6 +227,12 @@ function render_round(party_ballots, party_vote_nums, party_vote_stats) {
     graph.append(party_container);
   }
   output_div.append(graph);
+  output_div.append("<br/>");
+}
+
+function announce(message) {
+  var output_div = $("div#out");
+  output_div.append("<p>" + message + "</p>");
   output_div.append("<br/>");
 }
 
