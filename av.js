@@ -10,7 +10,7 @@ party_colours = {
   G: 'magenta',
   H: 'cyan',
   I: 'lawngreen',
-}
+};
 
 ballots_old = [
   {
@@ -49,7 +49,7 @@ ballots_old = [
     n: 80,
     prefs: 'FC'
   },
-]
+];
 
 
 function run_election() {
@@ -78,13 +78,14 @@ function parse_ballots_in() {
   var ballots = [];
   var ballots_in_text = $('#ballots-in').val();
   var ballot_pairs = ballots_in_text.replace(/ /g, '').split('\n');
-  for (var i = 0, len = ballot_pairs.length; i < len; i++) {
+  var i, len;
+  for (i = 0, len = ballot_pairs.length; i < len; i++) {
     var ballot_pair = ballot_pairs[i];
     if (ballot_pair !== "") {
       var ballot = {};
       ballot_pair = ballot_pair.split(':');
-      ballot['prefs'] = ballot_pair[0];
-      ballot['n'] = parseInt(ballot_pair[1], 10);
+      ballot.prefs = ballot_pair[0];
+      ballot.n = parseInt(ballot_pair[1], 10);
       ballots.push(ballot);
     }
   }
@@ -106,11 +107,12 @@ function start_election(ballots) {
 function make_initial_party_ballots(ballots) {
   // Construct an initial list of parties with empty ballot lists
   var party_ballots = {};
-  for (var i = 0, len = ballots.length; i < len; i++) {
+  var i, len;
+  for (i = 0, len = ballots.length; i < len; i++) {
     var ballot = ballots[i];
     // Only check the first candidate of each ballot
     // If a candidate does not appear as a first choice they are instantly eliminated
-    var candidate = ballot['prefs'][0];
+    var candidate = ballot.prefs[0];
     if (Object.keys(party_ballots).indexOf(candidate) === -1) {
       party_ballots[candidate] = [];
     }
