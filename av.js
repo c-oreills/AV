@@ -51,7 +51,30 @@ ballots_old = [
   },
 ]
 
+
+function run_election() {
+  // Clear output
+  $('#out').html('');
+
+  // Parse input
+  var ballots = parse_ballots_in();
+
+  // Run election script
+  start_election(ballots);
+
+  // Stop usual form submission
+  return false;
+}
+
+$(document).ready(run_election);
+
 function parse_ballots_in() {
+  /* Parses the contents of #ballots-in which should consist of multiple lines
+   * of the form
+   *    prefs:n
+   * where prefs is a list of preferences (characters A-I in preferred order)
+   * and n is an integer representing the number of ballot papers with said preferences
+   */
   var ballots = [];
   var ballots_in_text = $('#ballots-in').val();
   var ballot_pairs = ballots_in_text.replace(/ /g, '').split('\n');
@@ -66,17 +89,10 @@ function parse_ballots_in() {
     }
   }
 
-  // Clear output
-  $('#out').html('');
-
-  start(ballots);
-
-  return false;
+  return ballots;
 }
 
-$(document).ready(parse_ballots_in);
-
-function start(ballots, candidates) {
+function start_election(ballots) {
   party_ballots = make_initial_party_ballots(ballots);
 
   // Assign initial votes
