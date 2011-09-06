@@ -121,7 +121,8 @@ function make_initial_party_ballots(ballots) {
 }
 
 function assign_ballots(party_ballots, ballots) {
-  for each (var ballot in ballots) {
+  for (var i = 0, l = ballots.length; i < l; i++) {
+    var ballot = ballots[i];
     party_ballots = assign_ballot(party_ballots, ballot);
   }
   return party_ballots;
@@ -146,7 +147,8 @@ function count_votes(party_ballots) {
   for (var i in party_ballots) {
     var party = party_ballots[i];
     party_vote_nums[i] = 0;
-    for each (var vote in party) {
+    for (var j = 0, l = party.length; j < l; j++) {
+      var vote = party[j];
       party_vote_nums[i] += vote.n;
     }
   }
@@ -289,7 +291,8 @@ function render_ballot(ballot, party_name){
   var col_width = 99/ballot.prefs.length + "%";
   // Discarded preferences only shown with half opacity
   var pref_opacity = 0.5;
-  for each (var pref in ballot.prefs) {
+  for (var i = 0, l = ballot.prefs.length; i < l; i++) {
+    var pref = ballot.prefs[i];
     if (pref === party_name){
       pref_opacity = 1;
     }
